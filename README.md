@@ -1,4 +1,4 @@
-**Potato Blast**
+## **Potato Blast**
 
 This game is a 2D game where you are programming a cannon to blast falling potatoes using ammo shot vertically from the ground. You need to avoid the falling potatoes, because they will destroy your cannon if they fall on it. 
 
