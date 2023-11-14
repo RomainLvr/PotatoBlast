@@ -25,6 +25,7 @@ def initArena():
     Function that executes at launch.
     """
     arbitre.ruleArena("bgImg", "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
+    arbitre.ruleArena("preview", "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/preview.png?raw=true")
     time.sleep(0.3)
     arbitre.update()
 
