@@ -17,4 +17,4 @@ This game has been developped by Samuel LAUNAY, Romain LECOUVREUR and Victorien 
 
 📊 **Sequence Diagram**
 
-![Sequence diagram](https://github.com/RomainLvr/PotatoBlast/blob/main/pictures/sequence.png)
+![Sequence diagram](https://github.com/RomainLvr/PotatoBlast/blob/main/doc/sequence.png)
