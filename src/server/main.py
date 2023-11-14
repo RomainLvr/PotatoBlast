@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 AGENT_PASSWORD = os.getenv('__AGENT_PASSWORD__')
 SERVER = os.getenv('__SERVER__')
-PORT = os.getenv('__PORT__')
 USERNAME = os.getenv('__USERNAME__')
 ARENA = os.getenv('__ARENA__')
 ARBITRE_USERNAME = os.getenv('__ARBITRE_USERNAME__')
@@ -18,7 +17,7 @@ arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME,
                       username=USERNAME, 
                       password=AGENT_PASSWORD, 
                       server=SERVER,
-                      port = int(PORT),
+                      verbosity=2
                     )
 
 def initArena():
