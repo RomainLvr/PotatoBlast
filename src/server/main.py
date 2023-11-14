@@ -32,25 +32,7 @@ def initArena():
     to implement bomb rules, 
     then spawns 6 agents 
     """
-
-    #  Spawns random stoneblocks
-    arbitre.ruleArena("mapImgs", [
-                        "",
-    ])
-
-    arbitre.ruleArena("mapFriction", [
-                        0.0,
-                        1.0
-    ])
-
-    arbitre.ruleArena("mapRand", True)
-
-    arbitre.ruleArena("mapRandFreq", 0.4)
-
-    arbitre.ruleArena("reset", True)
-    arbitre.update()
-
-    arbitre.ruleArena("bgImg", [ "backgrounds.png"])
+    arbitre.ruleArena("bgImg", "backgrounds.png")
     time.sleep(0.3)
     arbitre.update()
 
