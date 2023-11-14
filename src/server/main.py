@@ -11,28 +11,26 @@ import copy
 
 from dotenv import load_dotenv
 load_dotenv()
-AGENT_PASSWORD = os.getenv('__AGENT_PASSWORD__')
-SERVER = os.getenv('__SERVER__')
-USERNAME = os.getenv('__USERNAME__')
-ARENA = os.getenv('__ARENA__')
-ARBITRE_USERNAME = os.getenv('__ARBITRE_USERNAME__')
+PASSWORD = os.getenv('PASSWORD')
+SERVER = os.getenv('SERVER')
+USERNAME = os.getenv('USERNAME')
+ARENA = os.getenv('ARENA')
+ARBITRE_USERNAME = os.getenv('ARBITRE_USERNAME')
 
 # Création de l'arbitre
 arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME, 
                       arena=ARENA, 
                       username=USERNAME, 
-                      password=AGENT_PASSWORD, 
+                      password=PASSWORD, 
                       server=SERVER,
                       verbosity=2
                     )
 
 def initArena():
     """
-    Function that executes at launch. Modifies the rules
-    to implement bomb rules, 
-    then spawns 6 agents 
+    Function that executes at launch.
     """
-    arbitre.ruleArena("bgImg", "res/background.png")
+    arbitre.ruleArena("bgImg", "background.png")
     time.sleep(0.3)
     arbitre.update()
 
