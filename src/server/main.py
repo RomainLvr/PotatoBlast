@@ -36,7 +36,6 @@ def initArena():
     #  Spawns random stoneblocks
     arbitre.ruleArena("mapImgs", [
                         "",
-                        "stoneblock.jpg",
     ])
 
     arbitre.ruleArena("mapFriction", [
@@ -51,7 +50,7 @@ def initArena():
     arbitre.ruleArena("reset", True)
     arbitre.update()
 
-    arbitre.ruleArena("bgImg", [ "./res/backgrounds.png"])
+    arbitre.ruleArena("bgImg", [ "backgrounds.png"])
     time.sleep(0.3)
     arbitre.update()
 
