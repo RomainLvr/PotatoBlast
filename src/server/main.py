@@ -30,7 +30,7 @@ def initArena():
     """
     Function that executes at launch.
     """
-    arbitre.ruleArena("bgImg", "background.png")
+    arbitre.ruleArena("bgImg", "res/background.png")
     time.sleep(0.3)
     arbitre.update()
 
