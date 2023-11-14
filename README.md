@@ -15,4 +15,4 @@ This game has been developped by Samuel LAUNAY, Romain LECOUVREUR and Victorien 
 - If the cannon gets too close too a potato when it hits the ground, you get destroyed and your score and power-ups get reset
 - The games never ends, the goal is to get the biggest score possible
 
-![Sequence diagram]([http://url/to/img.png](https://github.com/RomainLvr/PotatoBlast/blob/main/pictures/sequence.png)https://github.com/RomainLvr/PotatoBlast/blob/main/pictures/sequence.png)
+![Sequence diagram](https://github.com/RomainLvr/PotatoBlast/blob/main/pictures/sequence.png)
