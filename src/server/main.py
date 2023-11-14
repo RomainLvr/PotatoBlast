@@ -1,4 +1,10 @@
-import j2l.pytactx.agent as pytactx
+import sys
+import os
+
+src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(src_path)
+
+from api.j2l.pytactx import agent as pytactx
 import os
 import time
 import copy
