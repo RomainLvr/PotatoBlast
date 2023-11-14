@@ -23,7 +23,7 @@ from utils import *
 
 # # Import json rules file
 try:
-    with open(os.path.join(__fileDir__, 'serverRules.json')) as json_data:
+    with open(os.path.join(__fileDir__, 'serverParameter.json')) as json_data:
         serverRulesdict = json.load(json_data)
 except Exception as e:
     print(f"Une erreur est survenue dans le chargement des données : {e}")
@@ -45,25 +45,5 @@ time.sleep(0.3)
 referee.setArenaRules(serverRulesdict)
 referee.update()
 time.sleep(1)
-
-referee.createPlayers(serverRulesdict)
-referee.update()
-time.sleep(0.3)
-
-readyPlayers = []
-
-while len(readyPlayers) < len(referee.getCurrentRange()):
-    referee.update()
-    time.sleep(0.3)
-    for player in referee.getCurrentRange().values():
-        if not player["idle"]:
-            if player["clientId"] not in readyPlayers :
-                readyPlayers.append(player["clientId"])
-    print(readyPlayers)
-
-# # Launch party msg
-referee.printInfoToArena("🟢 C'est parti !")
-referee.update()
-time.sleep(2)
 
 referee.update()
