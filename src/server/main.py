@@ -1,10 +1,5 @@
-import sys
 import os
-
-src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(src_path)
-
-from api.j2l.pytactx import agent as pytactx
+import j2l.pytactx.agent as pytactx
 import os
 import time
 import copy
@@ -19,24 +14,17 @@ ARBITRE_USERNAME = os.getenv('ARBITRE_USERNAME')
 
 # Création de l'arbitre
 arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME, 
-                      arena=ARENA, 
-                      username=USERNAME, 
-                      password=PASSWORD, 
-                      server=SERVER,
-                      verbosity=2
+                      arena="potatoblast", 
+                      username="demo", 
+                      password="demo", 
+                      server="mqtt.jusdeliens.com"
                     )
 
 def initArena():
     """
     Function that executes at launch.
     """
-    arbitre.ruleArena("bgImg", "res/background.png")
-    time.sleep(0.3)
-    arbitre.update()
-
-    map = copy.deepcopy(arbitre.game["map"])
-
-    arbitre.ruleArena("map", map)
+    arbitre.ruleArena("bgImg", "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
     time.sleep(0.3)
     arbitre.update()
 
