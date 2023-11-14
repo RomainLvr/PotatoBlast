@@ -32,7 +32,7 @@ def initArena():
     to implement bomb rules, 
     then spawns 6 agents 
     """
-    arbitre.ruleArena("bgImg", "backgrounds.png")
+    arbitre.ruleArena("bgImg", "background.png")
     time.sleep(0.3)
     arbitre.update()
 
