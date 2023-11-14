@@ -1,3 +1,4 @@
 *.wsd
 *.env
 src/api/j2l/
+.idea
