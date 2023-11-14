@@ -1,49 +1,59 @@
-# import of standard libraries
-import time
+import j2l.pytactx.agent as pytactx
 import os
-import json
+import time
+import copy
 
-# File directory definition
-__fileDir__ = os.path.dirname(os.path.abspath(__file__))
-
-# ENV variables config
 from dotenv import load_dotenv
 load_dotenv()
-ARBITRE=os.getenv('ARBITRE')
-ARENA=os.getenv('ARENA')
-USERNAME=os.getenv('USERNAME')
-PASSWORD=os.getenv('PASSWORD')
-SERVER=os.getenv('SERVER')
-PORT=int(os.getenv('PORT'))
-DURATION=int(os.getenv('DURATION'))
+AGENT_PASSWORD = os.getenv('__AGENT_PASSWORD__')
+SERVER = os.getenv('__SERVER__')
+PORT = os.getenv('__PORT__')
+USERNAME = os.getenv('__USERNAME__')
+ARENA = os.getenv('__ARENA__')
+ARBITRE_USERNAME = os.getenv('__ARBITRE_USERNAME__')
 
-# # Import referee class and utils
-from referee import Referee
-from utils import *
+# Création de l'arbitre
+arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME, 
+                      arena=ARENA, 
+                      username=USERNAME, 
+                      password=AGENT_PASSWORD, 
+                      server=SERVER,
+                      port = int(PORT),
+                    )
 
-# # Import json rules file
-try:
-    with open(os.path.join(__fileDir__, 'serverParameter.json')) as json_data:
-        serverRulesdict = json.load(json_data)
-except Exception as e:
-    print(f"Une erreur est survenue dans le chargement des données : {e}")
+def initArena():
+    """
+    Function that executes at launch. Modifies the rules
+    to implement bomb rules, 
+    then spawns 6 agents 
+    """
 
-# # Referee creation
-referee = Referee(ARBITRE, ARENA, USERNAME, PASSWORD, SERVER, PORT, DURATION)
-referee.printInfoToArena("⌛ Initialisation de l'arbitre...")
+    #  Spawns random stoneblocks
+    arbitre.ruleArena("mapImgs", [
+                        "",
+                        "stoneblock.jpg",
+    ])
 
-# # Reset arena
-referee.resetArena()
-referee.update()
-time.sleep(3)
-referee.update()
+    arbitre.ruleArena("mapFriction", [
+                        0.0,
+                        1.0
+    ])
 
-referee.setRefereeMap(referee.getGameInfos()["map"])
-referee.update()
-time.sleep(0.3)
+    arbitre.ruleArena("mapRand", True)
 
-referee.setArenaRules(serverRulesdict)
-referee.update()
-time.sleep(1)
+    arbitre.ruleArena("mapRandFreq", 0.4)
 
-referee.update()
+    arbitre.ruleArena("reset", True)
+    arbitre.update()
+
+    arbitre.ruleArena("bgImg", [ "./res/backgrounds.png"])
+    time.sleep(0.3)
+    arbitre.update()
+
+    map = copy.deepcopy(arbitre.game["map"])
+
+    arbitre.ruleArena("map", map)
+    time.sleep(0.3)
+    arbitre.update()
+
+initArena()
