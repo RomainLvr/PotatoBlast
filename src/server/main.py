@@ -24,7 +24,9 @@ def initArena():
     """
     Function that executes at launch.
     """
+    # Set des options de la map
     arbitre.ruleArena("bgImg", "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
+    arbitre.ruleArena("mapImgs", ["", "none.png",])  
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
@@ -34,35 +36,28 @@ def initArena():
                 row[i] = 0
 
     arbitre.ruleArena("map", map) 
-    arbitre.ruleArena("mapImgs", [
-                        "",
-                        "none.png",
-    ])   
-    time.sleep(0.3)
+    time.sleep(1)
     arbitre.update()
 
-    agents =  {
-        "joueur1": {
-            "team": "0",
-            "x": 24,
-            "y": 27
-        },
-        "joueur2": {
-            "team": "0",
-            "x": 21,
-            "y": 27
-        },
-        "joueur3": {
-            "team": "0",
-            "x": 18,
-            "y": 27
-        },
-        "joueur4": {
-            "team": "0",
-            "x": 15,
-            "y": 27
-        },
-    }
+    # Set des profils et de leurs options
+    arbitre.ruleArena("profiles", ["default", "arbitre", "potato"])
+    arbitre.ruleArena(
+        "spawnArea",
+        {
+            "x": [20, 0, 25, 15],
+            "y": [27, 0, 27, 27],
+            "r": [0, 0, 0, 0],
+        }
+    )
+    arbitre.ruleArena("colisions", [True, True, True, True,])
+    time.sleep(0.3)
+    arbitre.update()
+ 
+    arbitre.ruleArena("weapons", ["oil",])  
+    arbitre.ruleArena("fireImgs", ["oil-drop.png",])  
+    arbitre.ruleArena("infiniteAmmo", [False, False, False, False,])
+    time.sleep(0.3)
+    arbitre.update()
 
     for agentId, attributes in agents.items():
         for attributeKey, attributeValue in attributes.items():
@@ -71,3 +66,9 @@ def initArena():
     arbitre.update()
 
 initArena()
+
+# Boucle principale pour actualiser l'arbitre 
+while True:
+    # Changement d'orientation de l'arbitre pour montrer qu'il est actif dans l'arène
+    arbitre.lookAt((arbitre.dir+1)%4)
+    arbitre.update()
