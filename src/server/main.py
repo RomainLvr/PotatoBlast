@@ -5,6 +5,7 @@ import time
 import copy
 
 from dotenv import load_dotenv
+
 load_dotenv()
 PASSWORD = os.getenv('PASSWORD')
 SERVER = os.getenv('SERVER')
@@ -13,14 +14,15 @@ ARENA = os.getenv('ARENA')
 ARBITRE_USERNAME = os.getenv('ARBITRE_USERNAME')
 
 # Création de l'arbitre
-arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME, 
-                      arena="potatoblast", 
-                      username="demo", 
-                      password="demo", 
-                      server="mqtt.jusdeliens.com"
-                    )
+arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME,
+                        arena="potatoblast",
+                        username="demo",
+                        password="demo",
+                        server="mqtt.jusdeliens.com"
+                        )
 oldRange = {}
 newRange = {}
+
 
 def initArena():
     """
@@ -29,27 +31,27 @@ def initArena():
     # Set des options de la map
     arbitre.ruleArena("gridColumns", 20)
     arbitre.ruleArena("gridRows", 16)
-    arbitre.ruleArena("bgImg", "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
+    arbitre.ruleArena("bgImg",
+                      "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
     arbitre.ruleArena(
         "mapImgs",
         [
             "",
             "",
-            "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/potato_1.png",
-            "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/potato_2.png",
+            "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
         ]
-    )  
+    )
     arbitre.ruleArena("mapFriction", [0, 1, 2, 3, 4])
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
             if i <= 3 or i >= 16:
                 row[i] = 1
-            else : 
+            else:
                 row[i] = 0
     map[0][0] = 0
 
-    arbitre.ruleArena("map", map) 
+    arbitre.ruleArena("map", map)
     time.sleep(1)
     arbitre.update()
 
@@ -63,30 +65,36 @@ def initArena():
             "r": [0, 0, 0],
         }
     )
-    arbitre.ruleArena("colisions", [False, False, False,])
-    arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryer.png", "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/potato_6.png", "",])
+    arbitre.ruleArena("colisions", [False, False, False, ])
+    arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryer.png",
+                                "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/potato_6.png",
+                                "", ])
     arbitre.ruleArena("range", [0, 0, 0])
     time.sleep(0.3)
     arbitre.update()
- 
-    arbitre.ruleArena("weapons", ["", "oil",])  
-    arbitre.ruleArena("fireImgs", ["", "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png",])  
-    arbitre.ruleArena("infiniteAmmo", [True, True, True,])
-    arbitre.ruleArena("dtMove", [150, 10, 150,])
+
+    arbitre.ruleArena("weapons", ["", "oil", ])
+    arbitre.ruleArena("fireImgs", ["",
+                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png", ])
+    arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
+    arbitre.ruleArena("dtMove", [150, 10, 150, ])
     time.sleep(0.3)
     arbitre.update()
+
 
 initArena()
 # Boucle principale pour actualiser l'arbitre 
 while True:
     # Changement d'orientation de l'arbitre pour montrer qu'il est actif dans l'arène
-    arbitre.lookAt((arbitre.dir+1)%4)
+    arbitre.lookAt((arbitre.dir + 1) % 4)
     # arbitre.ruleArena("info", "testest")
     newRange = copy.deepcopy(arbitre.range)
 
+    score = 0
+
     if oldRange != newRange:
 
-        score = 0
+
 
         for player, playerStats in newRange.items():
 
@@ -109,6 +117,6 @@ while True:
     oldRange = newRange
     arbitre.update()
     time.sleep(0.3)
-    
+
     # If a team wins,
-    # The game is paused  
+    # The game is paused

@@ -1,4 +1,5 @@
 *.wsd
 *.env
+*.pyc
 src/api/j2l/
 .idea
