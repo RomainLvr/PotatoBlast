@@ -82,15 +82,15 @@ def initArena():
     arbitre.ruleArena("colisions", [False, False, False, ])
     arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryer.png",
                                 "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
-                                "", ])
+                                ""])
     arbitre.ruleArena("range", [0, 0, 0])
     arbitre.ruleArena("dtMove", [10, 10, 10])
     time.sleep(0.3)
     arbitre.update()
 
-    arbitre.ruleArena("weapons", ["", "oil", ])
+    arbitre.ruleArena("weapons", ["", "oil"])
     arbitre.ruleArena("fireImgs", ["",
-                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png", ])
+                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png"])
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
     arbitre.ruleArena("dtMove", [150, 10, 150, ])
     arbitre.ruleArena("collision", [False, False, True, ])
@@ -101,8 +101,6 @@ def initArena():
 initArena()
 # Boucle principale pour actualiser l'arbitre 
 while True:
-    # Changement d'orientation de l'arbitre pour montrer qu'il est actif dans l'arène
-    arbitre.lookAt((arbitre.dir + 1) % 4)
     # arbitre.ruleArena("info", "testest")
     newRange = copy.deepcopy(arbitre.range)
 
