@@ -20,14 +20,9 @@ arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME,
                         password="demo",
                         server="mqtt.jusdeliens.com"
                         )
-P3 = pytactx.Agent(playerId="P3",
-                        arena="potatoblast",
-                        username="demo",
-                        password="demo",
-                        server="mqtt.jusdeliens.com"
-                        )
 oldRange = {}
 newRange = {}
+urlBase = "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/"
 
 
 def initArena():
@@ -38,7 +33,7 @@ def initArena():
     arbitre.ruleArena("gridColumns", 20)
     arbitre.ruleArena("gridRows", 16)
     arbitre.ruleArena("bgImg",
-                      "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
+                      urlBase + "background.png?raw=true")
     arbitre.ruleArena(
         "mapImgs",
         [
@@ -47,7 +42,7 @@ def initArena():
             "",
         ]
     )
-    arbitre.ruleArena("mapFriction", [0, 1, 2, 3, 4])
+    arbitre.ruleArena("mapFriction", [0, 1])
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
@@ -60,45 +55,79 @@ def initArena():
     map[0][0] = 0
 
     arbitre.ruleArena("map", map)
+    arbitre.ruleArena("dyMax", [14, 14, 1, 1, 1])
     time.sleep(1)
     arbitre.update()
 
     # Set des profils et de leurs options
-    arbitre.ruleArena("profiles", ["default", "arbitre", "potato"])
+    # Set des profils et de leurs options
+    arbitre.ruleArena(
+        "profiles",
+        [
+            "default",
+            "arbitre",
+            "potato1",
+        ]
+    )
+    arbitre.ruleArena(
+        "pImgs",
+        [
+            urlBase + "fryerPlayer.png",
+            urlBase + "referee.png",
+            urlBase + "potato_1.png",
+        ]
+    )
     arbitre.ruleArena(
         "spawnArea",
         {
-            "x": [10, 0, 10],
-            "y": [14, 0, 0],
+            "x": [10, 100, 10],
+            "y": [14, 100, 0],
             "r": [0, 0, 0],
         }
     )
-    arbitre.ruleArena("colisions", [False, False, False, ])
-    arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryerPlayer.png",
-                                "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
-                                ""])
+    arbitre.ruleArena(
+        "colisions",
+        [
+            False,
+            False,
+            True,
+        ]
+    )
     arbitre.ruleArena("range", [0, 0, 0])
     arbitre.ruleArena("score", "")
-    arbitre.ruleArena("nPlayers", 3)
-    arbitre.ruleArena("maxPlayers", 3)
+    arbitre.ruleArena("maxPlayers", 10)
     arbitre.ruleArena("maxRobots", 10)
     time.sleep(0.3)
     arbitre.update()
-
-    arbitre.ruleArena("weapons", ["", "oil", ""])
-    arbitre.ruleArena("weapon", [1,2,0])
-    arbitre.ruleArena("fireImgs", ["",
-                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png",
-                                   ""])
+    weapons = arbitre.game["weapons"]
+    weapons[1] = "beam"
+    arbitre.ruleArena(
+        "fireImgs",
+        weapons
+    )
+    weapon = arbitre.game["weapon"]
+    weapon[0] = 4
+    arbitre.ruleArena(
+        "weapon",
+        weapon
+    )
+    
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
     arbitre.ruleArena("dtMove", [150, 10, 150, ])
-    arbitre.ruleArena("dtFire", [2000, 500, 2000, ])
+    arbitre.ruleArena("dtFire", [500, 500, 500, 500, 500, 500 ])
     arbitre.ruleArena("collision", [False, False, True, ])
     time.sleep(0.3)
     arbitre.update()
 
 
 initArena()
+
+P4 = pytactx.Agent(playerId="Player1",
+                        arena="potatoblast",
+                        username="demo",
+                        password="demo",
+                        server="mqtt.jusdeliens.com"
+                        )
 # Boucle principale pour actualiser l'arbitre 
 while True:
     # arbitre.ruleArena("info", "testest")
@@ -109,7 +138,8 @@ while True:
     if oldRange != newRange:
 
         for player, playerStats in newRange.items():
-
+            if playerStats["profile"] != 0:
+                continue
             # If a player orientation is different from 0, its forced to 0.
             if playerStats["reqDir"] != 1 or playerStats["dir"] != 1:
                 arbitre.rulePlayer(playerStats["clientId"], "reqDir", 1)
@@ -117,8 +147,8 @@ while True:
             if playerStats["reqY"] != 14 or playerStats["y"] != 14:
                 arbitre.rulePlayer(playerStats["clientId"], "reqY", 14)
             # If a player is dead, he is respawned but his score is reset.
-            if playerStats["life"] > 0:
-                arbitre.rulePlayer(playerStats["clientId"], "score", 10)
+            if playerStats["life"] <= 0:
+                arbitre.rulePlayer(playerStats["clientId"], "score", 0)
 
             # Update total score of the game
             score += playerStats["score"]
@@ -127,10 +157,6 @@ while True:
     arbitre.ruleArena("info", infoScores)
 
     oldRange = newRange
+    P4.fire(True)
+    P4.update()
     arbitre.update()
-    P3.fire(True)
-    P3.update()
-    time.sleep(0.3)
-
-    # If a team wins,
-    # The game is paused
