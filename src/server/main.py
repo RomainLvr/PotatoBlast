@@ -20,6 +20,18 @@ arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME,
                         password="demo",
                         server="mqtt.jusdeliens.com"
                         )
+P1 = pytactx.Agent(playerId="P1",
+                        arena="potatoblast",
+                        username="demo",
+                        password="demo",
+                        server="mqtt.jusdeliens.com"
+                        )
+P2 = pytactx.Agent(playerId="P2",
+                        arena="potatoblast",
+                        username="demo",
+                        password="demo",
+                        server="mqtt.jusdeliens.com"
+                        )
 oldRange = {}
 newRange = {}
 
@@ -38,14 +50,16 @@ def initArena():
         [
             "",
             "",
-            "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
+            "",
         ]
     )
     arbitre.ruleArena("mapFriction", [0, 1, 2, 3, 4])
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
-            if i <= 3 or i >= 16:
+            if i == 0 or i == 19:
+                row[i] = 0
+            elif i <= 3 or i >= 16:
                 row[i] = 1
             else:
                 row[i] = 0
@@ -61,15 +75,16 @@ def initArena():
         "spawnArea",
         {
             "x": [10, 0, 10],
-            "y": [14, 0, 14],
+            "y": [14, 0, 0],
             "r": [0, 0, 0],
         }
     )
     arbitre.ruleArena("colisions", [False, False, False, ])
     arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryer.png",
-                                "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/potato_6.png",
+                                "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
                                 "", ])
     arbitre.ruleArena("range", [0, 0, 0])
+    arbitre.ruleArena("dtMove", [10, 10, 10])
     time.sleep(0.3)
     arbitre.update()
 
@@ -78,6 +93,7 @@ def initArena():
                                    "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png", ])
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
     arbitre.ruleArena("dtMove", [150, 10, 150, ])
+    arbitre.ruleArena("collision", [False, False, True, ])
     time.sleep(0.3)
     arbitre.update()
 
@@ -93,8 +109,6 @@ while True:
     score = 0
 
     if oldRange != newRange:
-
-
 
         for player, playerStats in newRange.items():
 
