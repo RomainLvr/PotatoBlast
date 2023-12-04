@@ -20,7 +20,7 @@ arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME,
                         password="demo",
                         server="mqtt.jusdeliens.com"
                         )
-P1 = pytactx.Agent(playerId="P1",
+P3 = pytactx.Agent(playerId="P3",
                         arena="potatoblast",
                         username="demo",
                         password="demo",
@@ -78,15 +78,21 @@ def initArena():
                                 "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
                                 ""])
     arbitre.ruleArena("range", [0, 0, 0])
-    arbitre.ruleArena("dtMove", [10, 10, 10])
+    arbitre.ruleArena("score", "")
+    arbitre.ruleArena("nPlayers", 3)
+    arbitre.ruleArena("maxPlayers", 3)
+    arbitre.ruleArena("maxRobots", 10)
     time.sleep(0.3)
     arbitre.update()
 
-    arbitre.ruleArena("weapons", ["", "oil"])
+    arbitre.ruleArena("weapons", ["", "oil", ""])
+    arbitre.ruleArena("weapon", [1,2,0])
     arbitre.ruleArena("fireImgs", ["",
-                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png"])
+                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png",
+                                   ""])
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
     arbitre.ruleArena("dtMove", [150, 10, 150, ])
+    arbitre.ruleArena("dtFire", [2000, 500, 2000, ])
     arbitre.ruleArena("collision", [False, False, True, ])
     time.sleep(0.3)
     arbitre.update()
@@ -111,7 +117,7 @@ while True:
             if playerStats["reqY"] != 14 or playerStats["y"] != 14:
                 arbitre.rulePlayer(playerStats["clientId"], "reqY", 14)
             # If a player is dead, he is respawned but his score is reset.
-            if playerStats["life"] >= 0:
+            if playerStats["life"] > 0:
                 arbitre.rulePlayer(playerStats["clientId"], "score", 10)
 
             # Update total score of the game
@@ -122,8 +128,8 @@ while True:
 
     oldRange = newRange
     arbitre.update()
-    P1.fire(True)
-    P1.update()
+    P3.fire(True)
+    P3.update()
     time.sleep(0.3)
 
     # If a team wins,
