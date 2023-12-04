@@ -26,12 +26,6 @@ P1 = pytactx.Agent(playerId="P1",
                         password="demo",
                         server="mqtt.jusdeliens.com"
                         )
-P2 = pytactx.Agent(playerId="P2",
-                        arena="potatoblast",
-                        username="demo",
-                        password="demo",
-                        server="mqtt.jusdeliens.com"
-                        )
 oldRange = {}
 newRange = {}
 
@@ -80,7 +74,7 @@ def initArena():
         }
     )
     arbitre.ruleArena("colisions", [False, False, False, ])
-    arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryer.png",
+    arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryerPlayer.png",
                                 "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
                                 ""])
     arbitre.ruleArena("range", [0, 0, 0])
@@ -128,6 +122,8 @@ while True:
 
     oldRange = newRange
     arbitre.update()
+    P1.fire(True)
+    P1.update()
     time.sleep(0.3)
 
     # If a team wins,
