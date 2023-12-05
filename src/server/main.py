@@ -38,9 +38,7 @@ def initArena():
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
-            if i == 0 or i == 19:
-                row[i] = 0
-            elif i <= 3 or i >= 16:
+            if i == 3 or i == 16:
                 row[i] = 1
             else:
                 row[i] = 0
@@ -67,6 +65,15 @@ def initArena():
         ]
     )
 
+    arbitre.ruleArena(
+        "pIcons",
+        [
+            "",
+            "👮",
+            "🥔"
+        ]
+    )
+
     time.sleep(0.5)
     arbitre.update()
 
@@ -78,13 +85,13 @@ def initArena():
             "r": [0, 0, 0],
         }
     )
-    colisions = arbitre.game["colisions"]
-    colisions[0] = False
-    colisions[1] = False
-    colisions[2] = True
     arbitre.ruleArena(
         "colisions",
-        colisions
+        [ 
+            False,
+            False,
+            True,
+        ]
     )
     
     profileRange = arbitre.game["range"]
@@ -102,26 +109,72 @@ def initArena():
     time.sleep(0.5)
     arbitre.update()
 
-    weapons = arbitre.game["weapons"]
+    weapons = [
+        "nothing",
+        "oil"
+    ]
     arbitre.ruleArena(
-        "fireImgs",
+        "weapons",
         weapons
     )
-    weapon = arbitre.game["weapon"]
-    weapon[0] = 4
+    time.sleep(0.5)
+    arbitre.update()
+    arbitre.ruleArena(
+        "wIcons",
+        [
+            "",
+            urlBase + "oil.png",
+        ]
+    )
+    arbitre.ruleArena(
+        "bullet",
+        [-1, -1]
+    )
+    arbitre.ruleArena(
+        "fireImgs",
+        [
+            "",
+            urlBase + "oil.png",
+        ]
+    )
     arbitre.ruleArena(
         "weapon",
-        weapon
+        [1, 1, 1]
+    )
+
+    arbitre.ruleArena(
+        "dtFire",
+        [300,300]
+    )
+    arbitre.ruleArena(
+        "hitFire",
+        [0,10]
+    )
+    arbitre.ruleArena(
+        "ownerFire",
+        [False,False]
+    )
+    arbitre.ruleArena(
+        "rangeFire",
+        [0,5]
+    )
+    arbitre.ruleArena(
+        "spreadFire",
+        [0,0]
+    )
+    arbitre.ruleArena(
+        "accelerationFire",
+        [0,0]
     )
     
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [150, 10, 150, ])
-    arbitre.ruleArena("dtFire", [500, 500, 500, 500, 500, 500 ])
+    arbitre.ruleArena("dtMove", [150, 10, 500, ])
     arbitre.ruleArena("collision", [False, False, True, ])
     time.sleep(0.3)
     arbitre.update()
 
 
+initArena()
 initArena()
 
 # Boucle principale pour actualiser l'arbitre 
