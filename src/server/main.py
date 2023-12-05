@@ -66,7 +66,7 @@ def initArena():
         [
             "default",
             "arbitre",
-            "potato1",
+            "potato",
         ]
     )
     arbitre.ruleArena(
@@ -122,12 +122,6 @@ def initArena():
 
 initArena()
 
-P4 = pytactx.Agent(playerId="Player1",
-                        arena="potatoblast",
-                        username="demo",
-                        password="demo",
-                        server="mqtt.jusdeliens.com"
-                        )
 # Boucle principale pour actualiser l'arbitre 
 while True:
     # arbitre.ruleArena("info", "testest")
@@ -153,10 +147,8 @@ while True:
             # Update total score of the game
             score += playerStats["score"]
 
-    infoScores = "Total SCORE : " + str(score)
+    infoScores = " 🏆 Total SCORE : " + str(score) + " 🏆"
     arbitre.ruleArena("info", infoScores)
 
     oldRange = newRange
-    P4.fire(True)
-    P4.update()
     arbitre.update()
