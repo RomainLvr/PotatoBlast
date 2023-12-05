@@ -34,14 +34,6 @@ def initArena():
     arbitre.ruleArena("gridRows", 16)
     arbitre.ruleArena("bgImg",
                       urlBase + "background.png?raw=true")
-    arbitre.ruleArena(
-        "mapImgs",
-        [
-            "",
-            "",
-            "",
-        ]
-    )
     arbitre.ruleArena("mapFriction", [0, 1])
     map = copy.deepcopy(arbitre.map)
     for row in map:
@@ -55,11 +47,7 @@ def initArena():
     map[0][0] = 0
 
     arbitre.ruleArena("map", map)
-    arbitre.ruleArena("dyMax", [14, 14, 1, 1, 1])
-    time.sleep(1)
-    arbitre.update()
 
-    # Set des profils et de leurs options
     # Set des profils et de leurs options
     arbitre.ruleArena(
         "profiles",
@@ -69,6 +57,7 @@ def initArena():
             "potato",
         ]
     )
+
     arbitre.ruleArena(
         "pImgs",
         [
@@ -77,6 +66,10 @@ def initArena():
             urlBase + "potato_1.png",
         ]
     )
+
+    time.sleep(0.5)
+    arbitre.update()
+
     arbitre.ruleArena(
         "spawnArea",
         {
@@ -85,22 +78,31 @@ def initArena():
             "r": [0, 0, 0],
         }
     )
+    colisions = arbitre.game["colisions"]
+    colisions[0] = False
+    colisions[1] = False
+    colisions[2] = True
     arbitre.ruleArena(
         "colisions",
-        [
-            False,
-            False,
-            True,
-        ]
+        colisions
     )
-    arbitre.ruleArena("range", [0, 0, 0])
+    
+    profileRange = arbitre.game["range"]
+    profileRange[0] = 0
+    profileRange[1] = 0
+    profileRange[2] = 0
+    arbitre.ruleArena(
+        "range",
+        profileRange
+    )
+
     arbitre.ruleArena("score", "")
     arbitre.ruleArena("maxPlayers", 10)
     arbitre.ruleArena("maxRobots", 10)
-    time.sleep(0.3)
+    time.sleep(0.5)
     arbitre.update()
+
     weapons = arbitre.game["weapons"]
-    weapons[1] = "beam"
     arbitre.ruleArena(
         "fireImgs",
         weapons
