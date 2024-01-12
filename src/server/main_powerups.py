@@ -25,10 +25,14 @@ referee_powerups = pytactx.Agent(playerId="francis_saucisse",
 active_powerups={"invincibility":False,"freeze":False,"doubleShoot":False}
 
 def activatePowerUp(powerup):
+    gameInfo=referee_powerups.game['info']
     active_powerups[powerup]=True
+    referee_powerups.ruleArena('info',gameInfo + powerup + " activated")
     checkPowerUps()
     time.sleep(5)
     active_powerups[powerup]=False
+    updatedGameInfo=referee_powerups.game['info']
+    referee_powerups.ruleArena('info',gameInfo)
     checkPowerUps()
 
 
@@ -44,7 +48,7 @@ def checkPotatoDeath():
                         activatePowerUp("freeze")
                     case 2:
                         activatePowerUp("doubleShoot")
-                    default:
+                    case default:
                         break
 
 def checkPowerUps():
@@ -65,13 +69,18 @@ def checkPowerUps():
             divider=1
             if not agent.doubleShootPowerup:
                     divider+=1
-            agent.dtFire=4000/divider
+            referee_powerups.rulePlayer(agent.dtFire,4000/divider)
 
         if active_powerups["freeze"] and potatoes[0].speedMax!=0:
             for potato in potatoes:
-                potato.speedMax=0
+                referee_powerups.rulePlayer(potato,speedMax=0)
         else:
             if not active_powerups["freeze"] and potatoes[0].speedMax==0:
                 for potato in potatoes:
-                    potato.speedMax=potato.speedIni
+                    referee_powerups.rulePlayer(potato.speedMax,potato.speedIni)
+
+
+                
+
+
 
