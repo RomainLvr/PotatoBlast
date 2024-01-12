@@ -14,6 +14,10 @@ class Potato:
     def change_state(self, new_state):
         if self.state.__class__.__name__ != new_state.__class__.__name__:  # Vérifiez si l'état change
             self.state = new_state
+            self.update()
+
+    def get_state(self):
+        return self.state
 
     # function to handle the state of the agent
     def update(self):

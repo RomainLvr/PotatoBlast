@@ -61,7 +61,6 @@ arbitre.update()
 
 # Boucle principale pour actualiser l'arbitre
 while True:
-
     potatoes = []
     for agent in arbitre.range.items():
         agentId = agent[0]
@@ -71,18 +70,17 @@ while True:
 
     complete_potatoes(potatoes, nb_potatoes_demandees)
 
-    for potatoe in potatoes:
-        agentId = potatoe.potatoId
-        print(agentId)
+    for potato in potatoes:
+        agentId = potato.potato["clientId"]
+        # Si la patate est en dehors de la zone de jeu, l'arbitre la remet au centre
         if agentId.startswith("potato"):
-            x = potatoe["x"]
-            y = potatoe["y"]
-            if y == 15:
-                if 4 < x > 12:
-                    potatoe.change_state(States.Up())
+            x = potato.potato["x"]
+            y = potato.potato["y"]
+            print("x: " + str(x) + " y: " + str(y))
+            if (y > 15 or y < 2 or x < 4 or x > 15) and not potato.state.__class__.__name__ == "Center":
+                # Remettre la patate au centre
+                potato.change_state(States.Center())
             else:
-                potatoe.change_state(States.Down())
-
-        potatoe.potato.update()
+                potato.update()
 
     arbitre.update()
