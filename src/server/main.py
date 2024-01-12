@@ -168,7 +168,7 @@ def initArena():
     )
     
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [150, 10, 500, ])
+    arbitre.ruleArena("dtMove", [250, 10, 1000, ])
     arbitre.ruleArena("collision", [False, False, True, ])
     time.sleep(0.3)
     arbitre.update()
@@ -201,7 +201,6 @@ while True:
 
             # Update total score of the game
             score += playerStats["score"]
-
     infoScores = " 🏆 Total SCORE : " + str(score) + " 🏆"
     arbitre.ruleArena("info", infoScores)
 
