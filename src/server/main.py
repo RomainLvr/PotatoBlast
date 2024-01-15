@@ -35,6 +35,8 @@ def initArena():
     arbitre.ruleArena("bgImg",
                       urlBase + "background.png?raw=true")
     arbitre.ruleArena("mapFriction", [0, 1])
+    arbitre.ruleArena("mapBreakable", [False, False])
+    arbitre.ruleArena("mapHit", [0, 0])
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
@@ -68,7 +70,7 @@ def initArena():
     arbitre.ruleArena(
         "pIcons",
         [
-            "",
+            "🍟",
             "👮",
             "🥔"
         ]
@@ -103,7 +105,7 @@ def initArena():
         profileRange
     )
 
-    arbitre.ruleArena("score", "")
+    arbitre.ruleArena("score", "DM")
     arbitre.ruleArena("maxPlayers", 10)
     arbitre.ruleArena("maxRobots", 10)
     time.sleep(0.5)
@@ -123,7 +125,7 @@ def initArena():
         "wIcons",
         [
             "",
-            urlBase + "oil.png",
+            "💧",
         ]
     )
     arbitre.ruleArena(
@@ -139,7 +141,7 @@ def initArena():
     )
     arbitre.ruleArena(
         "weapon",
-        [1, 1, 1]
+        [1, 0, 0]
     )
 
     arbitre.ruleArena(
@@ -170,12 +172,29 @@ def initArena():
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
     arbitre.ruleArena("dtMove", [250, 10, 1000, ])
     arbitre.ruleArena("collision", [False, False, True, ])
+
+    arbitre.ruleArena(
+        "teamColors",
+        {
+            [255, 218, 51],
+            [0, 0, 0],
+        }
+    )
+    arbitre.ruleArena("teamNb", 2)
+    arbitre.ruleArena("teamName", ["🍟", "🥔"])
     time.sleep(0.3)
     arbitre.update()
 
 
 initArena()
 initArena()
+arbitre.moveTowards(18,0)
+agent = pytactx.Agent(playerId="P1",
+                        arena="potatoblast",
+                        username="demo",
+                        password="demo",
+                        server="mqtt.jusdeliens.com"
+                        )
 
 # Boucle principale pour actualiser l'arbitre 
 while True:
@@ -206,3 +225,6 @@ while True:
 
     oldRange = newRange
     arbitre.update()
+
+    agent.fire(True)
+    agent.update()
