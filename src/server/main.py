@@ -96,13 +96,9 @@ def initArena():
         ]
     )
     
-    profileRange = arbitre.game["range"]
-    profileRange[0] = 0
-    profileRange[1] = 0
-    profileRange[2] = 0
     arbitre.ruleArena(
         "range",
-        profileRange
+        [0, 0, 0]
     )
 
     arbitre.ruleArena("score", "DM")
@@ -165,7 +161,8 @@ def initArena():
     )
     
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [250, 10, 250, ])
+    arbitre.ruleArena("dtMove", [250, 10, 100 ])
+    arbitre.ruleArena("nbRespawn", [0, 0, 1 ])
     arbitre.ruleArena("collision", [False, False, True, ])
 
     arbitre.ruleArena(
@@ -177,10 +174,13 @@ def initArena():
     )
     arbitre.ruleArena("teamNb", 2)
     arbitre.ruleArena("teamName", ["🍟", "🥔"])
+    arbitre.ruleArena("hitTeam", ["False", "False"])
     time.sleep(0.3)
     arbitre.update()
 
 
+initArena()
+time.sleep(2)
 initArena()
 arbitre.moveTowards(18,0)
 
