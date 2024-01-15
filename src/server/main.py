@@ -113,7 +113,8 @@ def initArena():
 
     weapons = [
         "nothing",
-        "oil"
+        "oil",
+        "potato"
     ]
     arbitre.ruleArena(
         "weapons",
@@ -126,31 +127,25 @@ def initArena():
         [
             "",
             "💧",
+            ""
         ]
     )
     arbitre.ruleArena(
         "bullet",
-        [-1, -1]
-    )
-    arbitre.ruleArena(
-        "fireImgs",
-        [
-            "",
-            urlBase + "oil.png",
-        ]
+        [-1, -1, -1]
     )
     arbitre.ruleArena(
         "weapon",
-        [1, 0, 0]
+        [1, 0, 2]
     )
 
     arbitre.ruleArena(
         "dtFire",
-        [300,300]
+        [300,300,0]
     )
     arbitre.ruleArena(
         "hitFire",
-        [0,10]
+        [0,10,200]
     )
     arbitre.ruleArena(
         "ownerFire",
@@ -174,11 +169,11 @@ def initArena():
     arbitre.ruleArena("collision", [False, False, True, ])
 
     arbitre.ruleArena(
-        "teamColors",
-        {
+        "teamColor",
+        [
             [255, 218, 51],
             [0, 0, 0],
-        }
+        ]
     )
     arbitre.ruleArena("teamNb", 2)
     arbitre.ruleArena("teamName", ["🍟", "🥔"])
@@ -187,14 +182,7 @@ def initArena():
 
 
 initArena()
-initArena()
 arbitre.moveTowards(18,0)
-agent = pytactx.Agent(playerId="P1",
-                        arena="potatoblast",
-                        username="demo",
-                        password="demo",
-                        server="mqtt.jusdeliens.com"
-                        )
 
 # Boucle principale pour actualiser l'arbitre 
 while True:
@@ -207,6 +195,7 @@ while True:
 
         for player, playerStats in newRange.items():
             if playerStats["profile"] != 0:
+                arbitre.rulePlayer(playerStats["clientId"], "team", 1)
                 continue
             # If a player orientation is different from 0, its forced to 0.
             if playerStats["reqDir"] != 1 or playerStats["dir"] != 1:
@@ -225,6 +214,3 @@ while True:
 
     oldRange = newRange
     arbitre.update()
-
-    agent.fire(True)
-    agent.update()
