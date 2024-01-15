@@ -170,23 +170,22 @@ def initArena():
     )
     
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [250, 10, 1000, ])
+    arbitre.ruleArena("dtMove", [250, 10, 250, ])
     arbitre.ruleArena("collision", [False, False, True, ])
 
-    arbitre.ruleArena(
-        "teamColors",
-        {
-            [255, 218, 51],
-            [0, 0, 0],
-        }
-    )
-    arbitre.ruleArena("teamNb", 2)
-    arbitre.ruleArena("teamName", ["🍟", "🥔"])
+    #arbitre.ruleArena(
+    #    "teamColors",
+    #    {
+    #        [255, 218, 51],
+    #        [0, 0, 0],
+    #    }
+    #)
+    #arbitre.ruleArena("teamNb", 2)
+    #arbitre.ruleArena("teamName", ["🍟", "🥔"])
     time.sleep(0.3)
     arbitre.update()
 
 
-initArena()
 initArena()
 arbitre.moveTowards(18,0)
 agent = pytactx.Agent(playerId="P1",
