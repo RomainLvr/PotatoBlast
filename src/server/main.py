@@ -165,7 +165,7 @@ def initArena():
     )
     
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [250, 10, 1000, ])
+    arbitre.ruleArena("dtMove", [250, 10, 250, ])
     arbitre.ruleArena("collision", [False, False, True, ])
 
     arbitre.ruleArena(

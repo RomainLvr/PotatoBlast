@@ -3,7 +3,6 @@ from random import randint
 import j2l.pytactx.agent as pytactx
 import os
 import time
-import copy
 
 from dotenv import load_dotenv
 
