@@ -1,16 +1,17 @@
-# Implémentation des états concrets
-import math
+import random
 
 
-# Implémentation des états concrets
 class Up:
     def handle(self, potato):
         x = potato.potato["x"]
         y = potato.potato["y"]
         if y <= 2:
-            print("Up to down")
             potato.change_state(Down())
         else:
+            randomInt = random.randint(-1, 1)
+            while not (4 < x + randomInt < 15):
+                randomInt = random.randint(-1, 1)
+            potato.arbiter.rulePlayer(potato.potato["clientId"], "x", x + randomInt)
             potato.arbiter.rulePlayer(potato.potato["clientId"], "y", y - 1)
             potato.potato.update()
 
@@ -20,9 +21,12 @@ class Down:
         x = potato.potato["x"]
         y = potato.potato["y"]
         if y >= 14:
-            print("Down to up")
             potato.change_state(Up())
         else:
+            randomInt = random.randint(-1, 1)
+            while not (4 < x + randomInt < 15):
+                randomInt = random.randint(-1, 1)
+            potato.arbiter.rulePlayer(potato.potato["clientId"], "x", x + randomInt)
             potato.arbiter.rulePlayer(potato.potato["clientId"], "y", y + 1)
             potato.potato.update()
 
@@ -33,4 +37,7 @@ class Center:
         potato.arbiter.rulePlayer(potato.potato["clientId"], "x", 9)  # Centre en x
         potato.arbiter.rulePlayer(potato.potato["clientId"], "y", 8)
         potato.potato.update()
-        potato.change_state(Down())
+        x = potato.potato["x"]
+        y = potato.potato["y"]
+        if 9 > y > 7:
+            potato.change_state(Down())
