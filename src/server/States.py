@@ -39,5 +39,5 @@ class Center:
         potato.potato.update()
         x = potato.potato["x"]
         y = potato.potato["y"]
-        if 9 > y > 7:
+        if 9 >= y >= 7:
             potato.change_state(Down())

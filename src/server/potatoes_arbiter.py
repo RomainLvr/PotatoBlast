@@ -28,7 +28,7 @@ potatoes = []
 
 # Création des potatos
 def createPotato(lvl: int):
-    if 1 <= lvl <= 8:
+    if 1 <= lvl <= 2:
         rand = random.randint(0, 100 * lvl)
         agents = {
             "potato" + str(rand) + "_" + str(lvl): {
@@ -52,7 +52,7 @@ def complete_potatoes(potatoes, nb):
     for i in range(missing_potatoes):
         print("Creating potato")
         # Génère un niveau aléatoire entre 1 et 8 avec une notion de rareté (plus le niveau est élevé, plus il est rare)
-        lvl = random.randint(1, 8)
+        lvl = 1 #random.randint(1, 2)
         createPotato(lvl)  # Supposons que cette fonction crée une potato avec le niveau donné
 
 
@@ -70,7 +70,7 @@ def isAgentInPotatoes(agentId: str):
     return False
 
 
-nb_potatoes_demandees = 1  # Nombre total de potatoes demandées
+nb_potatoes_demandees = 3  # Nombre total de potatoes demandées
 arbitre.moveTowards(0, 0)
 arbitre.lookAt(0)
 arbitre.update()
