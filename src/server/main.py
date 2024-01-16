@@ -89,13 +89,13 @@ def initArena():
     )
     arbitre.ruleArena(
         "colisions",
-        [ 
+        [
             False,
             False,
             True,
         ]
     )
-    
+
     arbitre.ruleArena(
         "range",
         [0, 0, 0]
@@ -137,32 +137,32 @@ def initArena():
 
     arbitre.ruleArena(
         "dtFire",
-        [300,300,0]
+        [300, 300, 0]
     )
     arbitre.ruleArena(
         "hitFire",
-        [0,10,200]
+        [0, 10, 200]
     )
     arbitre.ruleArena(
         "ownerFire",
-        [False,False]
+        [False, False]
     )
     arbitre.ruleArena(
         "rangeFire",
-        [0,5]
+        [0, 5]
     )
     arbitre.ruleArena(
         "spreadFire",
-        [0,0]
+        [0, 0]
     )
     arbitre.ruleArena(
         "accelerationFire",
-        [0,0]
+        [0, 0]
     )
-    
+
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [250, 10, 100 ])
-    arbitre.ruleArena("nbRespawn", [0, 0, 1 ])
+    arbitre.ruleArena("dtMove", [250, 10, 100])
+    arbitre.ruleArena("nbRespawn", [0, 0, 1])
     arbitre.ruleArena("collision", [False, False, True, ])
 
     arbitre.ruleArena(
@@ -179,38 +179,39 @@ def initArena():
     arbitre.update()
 
 
-initArena()
-time.sleep(2)
-initArena()
-arbitre.moveTowards(18,0)
+def run():
+    initArena()
+    time.sleep(2)
+    initArena()
+    arbitre.moveTowards(18, 0)
 
-# Boucle principale pour actualiser l'arbitre 
-while True:
-    # arbitre.ruleArena("info", "testest")
-    newRange = copy.deepcopy(arbitre.range)
+    # Boucle principale pour actualiser l'arbitre
+    while True:
+        # arbitre.ruleArena("info", "testest")
+        newRange = copy.deepcopy(arbitre.range)
 
-    score = 0
+        score = 0
 
-    if oldRange != newRange:
+        if oldRange != newRange:
 
-        for player, playerStats in newRange.items():
-            if playerStats["profile"] != 0:
-                arbitre.rulePlayer(playerStats["clientId"], "team", 1)
-                continue
-            # If a player orientation is different from 0, its forced to 0.
-            if playerStats["reqDir"] != 1 or playerStats["dir"] != 1:
-                arbitre.rulePlayer(playerStats["clientId"], "reqDir", 1)
-            # If a player want to move to the top or to the bottom, he is forced to stay in the middle.
-            if playerStats["reqY"] != 14 or playerStats["y"] != 14:
-                arbitre.rulePlayer(playerStats["clientId"], "reqY", 14)
-            # If a player is dead, he is respawned but his score is reset.
-            if playerStats["life"] <= 0:
-                arbitre.rulePlayer(playerStats["clientId"], "score", 0)
+            for player, playerStats in newRange.items():
+                if playerStats["profile"] != 0:
+                    arbitre.rulePlayer(playerStats["clientId"], "team", 1)
+                    continue
+                # If a player orientation is different from 0, its forced to 0.
+                if playerStats["reqDir"] != 1 or playerStats["dir"] != 1:
+                    arbitre.rulePlayer(playerStats["clientId"], "reqDir", 1)
+                # If a player want to move to the top or to the bottom, he is forced to stay in the middle.
+                if playerStats["reqY"] != 14 or playerStats["y"] != 14:
+                    arbitre.rulePlayer(playerStats["clientId"], "reqY", 14)
+                # If a player is dead, he is respawned but his score is reset.
+                if playerStats["life"] <= 0:
+                    arbitre.rulePlayer(playerStats["clientId"], "score", 0)
 
-            # Update total score of the game
-            score += playerStats["score"]
-    infoScores = " 🏆 Total SCORE : " + str(score) + " 🏆"
-    arbitre.ruleArena("info", infoScores)
+                # Update total score of the game
+                score += playerStats["score"]
+        infoScores = " 🏆 Total SCORE : " + str(score) + " 🏆"
+        arbitre.ruleArena("info", infoScores)
 
-    oldRange = newRange
-    arbitre.update()
+        oldRange = newRange
+        arbitre.update()
