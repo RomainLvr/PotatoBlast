@@ -52,7 +52,7 @@ def complete_potatoes(potatoes, nb):
     for i in range(missing_potatoes):
         print("Creating potato")
         # Génère un niveau aléatoire entre 1 et 8 avec une notion de rareté (plus le niveau est élevé, plus il est rare)
-        lvl = 1 #random.randint(1, 2)
+        lvl = 1  # random.randint(1, 2)
         createPotato(lvl)  # Supposons que cette fonction crée une potato avec le niveau donné
 
 
@@ -71,35 +71,38 @@ def isAgentInPotatoes(agentId: str):
 
 
 nb_potatoes_demandees = 3  # Nombre total de potatoes demandées
-arbitre.moveTowards(0, 0)
-arbitre.lookAt(0)
-arbitre.update()
 
-# delete potatoes
-for agent in arbitre.range.items():
-    agentId = agent[0]
-    if agentId.startswith("potato"):
-        arbitre.rulePlayer(agentId, "life", 0)
-        arbitre.update()
 
-# Boucle principale pour actualiser l'arbitre
-while True:
+def run():
+    arbitre.moveTowards(0, 0)
+    arbitre.lookAt(0)
+    arbitre.update()
+
+    # delete potatoes
     for agent in arbitre.range.items():
         agentId = agent[0]
         if agentId.startswith("potato"):
-            if not isAgentInPotatoes(agentId):
-                potatoes.append(Potato(agent[1], arbitre))
+            arbitre.rulePlayer(agentId, "life", 0)
+            arbitre.update()
 
-    for potato in potatoes:
-        if "clientId" in potato.potato:
-            agentId = potato.potato["clientId"]
-            x = potato.potato["x"]
-            y = potato.potato["y"]
-            if (y > 15 or y < 2 or x < 4 or x > 15) and not potato.state.__class__.__name__ == "Center":
-                potato.change_state(States.Center())
-            else:
-                potato.update()
+    # Boucle principale pour actualiser l'arbitre
+    while True:
+        for agent in arbitre.range.items():
+            agentId = agent[0]
+            if agentId.startswith("potato"):
+                if not isAgentInPotatoes(agentId):
+                    potatoes.append(Potato(agent[1], arbitre))
 
-    complete_potatoes(potatoes, nb_potatoes_demandees)
+        for potato in potatoes:
+            if "clientId" in potato.potato:
+                agentId = potato.potato["clientId"]
+                x = potato.potato["x"]
+                y = potato.potato["y"]
+                if (y > 15 or y < 2 or x < 4 or x > 15) and not potato.state.__class__.__name__ == "Center":
+                    potato.change_state(States.Center())
+                else:
+                    potato.update()
 
-    arbitre.update()
+        complete_potatoes(potatoes, nb_potatoes_demandees)
+
+        arbitre.update()
