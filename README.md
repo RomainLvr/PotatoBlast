@@ -54,7 +54,7 @@ This game has been developped by Samuel LAUNAY, Romain LECOUVREUR and Victorien 
 *PotatoBlast *
 - Launay Samuel
 - Lecouvreur Romain
-- GOntier--DUrand Victorien
+- Gontier--Durand Victorien
 *J2L api*
 - Julien Arne
 
