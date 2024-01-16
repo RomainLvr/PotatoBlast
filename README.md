@@ -43,9 +43,9 @@ This game has been developped by Samuel LAUNAY, Romain LECOUVREUR and Victorien 
 - 
 
 **Roadmap**
-- 1. Implementation of several potato profiles (more life, etc.)
-- 2. Optimizing potato movement
-- 3. Smooth movement type added to make the game more pleasing to the eye.
+1. Implementation of several potato profiles (more life, etc.)
+2. Optimizing potato movement
+3. Smooth movement type added to make the game more pleasing to the eye.
 
 🖼️ **Maquette**
 ![Maquette](https://github.com/RomainLvr/PotatoBlast/blob/main/doc/maquette.png)
