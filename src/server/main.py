@@ -101,6 +101,7 @@ def initArena():
         [0, 0, 0]
     )
 
+    # Set des Options de l'arene
     arbitre.ruleArena("score", "DM")
     arbitre.ruleArena("maxPlayers", 10)
     arbitre.ruleArena("maxRobots", 10)
