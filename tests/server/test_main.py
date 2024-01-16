@@ -28,7 +28,7 @@ def test_death():
 def test_invincibilityPowerup():
     """Tests that the invincibility powerup works correctly"""
     
-    activatePowerUp("invincibility")
+    main_powerups.activatePowerUp("invincibility")
     assert agent.invincible==True,"The agent must be invincible for 10 seconds "
     print("Waiting for the powerup to consume...")
     time.sleep(9500)
@@ -39,7 +39,7 @@ def test_invincibilityPowerup():
 def test_doubleShootPowerup():
     """Tests that the double shoot powerup works correctly"""
     
-    activatePowerUp("doubleShoot")
+    main_powerups.activatePowerUp("doubleShoot")
     assert agent.doubleShoot==True,"The agent must shoot 2 bullets instead of 1"
     print("Waiting for the double shoot powerup to consume...")
     time.sleep(9500)
@@ -49,7 +49,7 @@ def test_doubleShootPowerup():
 
 def test_freezePowerup():
     """Tests that the freeze powerup works correctly and that the potatoes are not able to move"""
-    activatePowerUp("freeze")
+    main_powerups.activatePowerUp("freeze")
     
     for ptt in referee_powerups.range:
         if ptt.profiles==2:  
