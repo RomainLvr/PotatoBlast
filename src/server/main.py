@@ -22,6 +22,7 @@ arbitre = pytactx.Agent(playerId=ARBITRE_USERNAME,
                         )
 oldRange = {}
 newRange = {}
+urlBase = "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/"
 
 
 def initArena():
@@ -32,91 +33,186 @@ def initArena():
     arbitre.ruleArena("gridColumns", 20)
     arbitre.ruleArena("gridRows", 16)
     arbitre.ruleArena("bgImg",
-                      "https://github.com/RomainLvr/PotatoBlast/blob/main/src/server/res/background.png?raw=true")
-    arbitre.ruleArena(
-        "mapImgs",
-        [
-            "",
-            "",
-            "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/referee.png",
-        ]
-    )
-    arbitre.ruleArena("mapFriction", [0, 1, 2, 3, 4])
+                      urlBase + "background.png?raw=true")
+    arbitre.ruleArena("mapFriction", [0, 1])
+    arbitre.ruleArena("mapBreakable", [False, False])
+    arbitre.ruleArena("mapHit", [0, 0])
     map = copy.deepcopy(arbitre.map)
     for row in map:
         for i in range(len(row)):
-            if i <= 3 or i >= 16:
+            if i == 3 or i == 16:
                 row[i] = 1
             else:
                 row[i] = 0
     map[0][0] = 0
 
     arbitre.ruleArena("map", map)
-    time.sleep(1)
-    arbitre.update()
 
     # Set des profils et de leurs options
-    arbitre.ruleArena("profiles", ["default", "arbitre", "potato"])
+    arbitre.ruleArena(
+        "profiles",
+        [
+            "default",
+            "arbitre",
+            "potato",
+        ]
+    )
+
+    arbitre.ruleArena(
+        "pImgs",
+        [
+            urlBase + "fryerPlayer.png",
+            urlBase + "referee.png",
+            urlBase + "potato_1.png",
+        ]
+    )
+
+    arbitre.ruleArena(
+        "pIcons",
+        [
+            "🍟",
+            "👮",
+            "🥔"
+        ]
+    )
+
+    time.sleep(0.5)
+    arbitre.update()
+
     arbitre.ruleArena(
         "spawnArea",
         {
-            "x": [10, 0, 10],
-            "y": [14, 0, 14],
+            "x": [10, 100, 10],
+            "y": [14, 100, 0],
             "r": [0, 0, 0],
         }
     )
-    arbitre.ruleArena("colisions", [False, False, False, ])
-    arbitre.ruleArena("pImgs", ["https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/fryer.png",
-                                "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/potato_6.png",
-                                "", ])
-    arbitre.ruleArena("range", [0, 0, 0])
-    time.sleep(0.3)
+    arbitre.ruleArena(
+        "colisions",
+        [
+            False,
+            False,
+            True,
+        ]
+    )
+
+    arbitre.ruleArena(
+        "range",
+        [0, 0, 0]
+    )
+
+    # Set des Options de l'arene
+    arbitre.ruleArena("score", "DM")
+    arbitre.ruleArena("maxPlayers", 10)
+    arbitre.ruleArena("maxRobots", 10)
+    time.sleep(0.5)
     arbitre.update()
 
-    arbitre.ruleArena("weapons", ["", "oil", ])
-    arbitre.ruleArena("fireImgs", ["",
-                                   "https://raw.githubusercontent.com/RomainLvr/PotatoBlast/main/src/server/res/oil-drop.png", ])
+    weapons = [
+        "nothing",
+        "oil",
+        "potato"
+    ]
+    arbitre.ruleArena(
+        "weapons",
+        weapons
+    )
+    time.sleep(0.5)
+    arbitre.update()
+    arbitre.ruleArena(
+        "wIcons",
+        [
+            "",
+            "💧",
+            ""
+        ]
+    )
+    arbitre.ruleArena(
+        "bullet",
+        [-1, -1, -1]
+    )
+    arbitre.ruleArena(
+        "weapon",
+        [1, 0, 2]
+    )
+
+    arbitre.ruleArena(
+        "dtFire",
+        [300, 300, 0]
+    )
+    arbitre.ruleArena(
+        "hitFire",
+        [0, 10, 200]
+    )
+    arbitre.ruleArena(
+        "ownerFire",
+        [False, False]
+    )
+    arbitre.ruleArena(
+        "rangeFire",
+        [0, 5]
+    )
+    arbitre.ruleArena(
+        "spreadFire",
+        [0, 0]
+    )
+    arbitre.ruleArena(
+        "accelerationFire",
+        [0, 0]
+    )
+
     arbitre.ruleArena("infiniteAmmo", [True, True, True, ])
-    arbitre.ruleArena("dtMove", [150, 10, 150, ])
+    arbitre.ruleArena("dtMove", [250, 10, 100])
+    arbitre.ruleArena("nbRespawn", [0, 0, 1])
+    arbitre.ruleArena("collision", [False, False, True, ])
+
+    arbitre.ruleArena(
+        "teamColor",
+        [
+            [255, 218, 51],
+            [0, 0, 0],
+        ]
+    )
+    arbitre.ruleArena("teamNb", 2)
+    arbitre.ruleArena("teamName", ["🍟", "🥔"])
+    arbitre.ruleArena("hitTeam", ["False", "False"])
     time.sleep(0.3)
     arbitre.update()
 
 
-initArena()
-# Boucle principale pour actualiser l'arbitre 
-while True:
-    # Changement d'orientation de l'arbitre pour montrer qu'il est actif dans l'arène
-    arbitre.lookAt((arbitre.dir + 1) % 4)
-    # arbitre.ruleArena("info", "testest")
-    newRange = copy.deepcopy(arbitre.range)
+def run():
+    initArena()
+    time.sleep(2)
+    initArena()
+    arbitre.moveTowards(18, 0)
 
-    score = 0
+    # Boucle principale pour actualiser l'arbitre
+    while True:
+        # arbitre.ruleArena("info", "testest")
+        newRange = copy.deepcopy(arbitre.range)
 
-    if oldRange != newRange:
+        score = 0
 
+        if oldRange != newRange:
 
+            for player, playerStats in newRange.items():
+                if playerStats["profile"] != 0:
+                    arbitre.rulePlayer(playerStats["clientId"], "team", 1)
+                    continue
+                # If a player orientation is different from 0, its forced to 0.
+                if playerStats["reqDir"] != 1 or playerStats["dir"] != 1:
+                    arbitre.rulePlayer(playerStats["clientId"], "reqDir", 1)
+                # If a player want to move to the top or to the bottom, he is forced to stay in the middle.
+                if playerStats["reqY"] != 14 or playerStats["y"] != 14:
+                    arbitre.rulePlayer(playerStats["clientId"], "reqY", 14)
+                # If a player is dead, he is respawned but his score is reset.
+                if playerStats["life"] <= 0:
+                    arbitre.rulePlayer(playerStats["clientId"], "score", 0)
 
-        for player, playerStats in newRange.items():
+                # Update total score of the game
+                score += playerStats["score"]
+        infoScores = " 🏆 Total SCORE : " + str(score) + " 🏆"
+        arbitre.ruleArena("info", infoScores)
 
-            # If a player orientation is different from 0, its forced to 0.
-            if playerStats["reqDir"] != 1 or playerStats["dir"] != 1:
-                arbitre.rulePlayer(playerStats["clientId"], "reqDir", 1)
-            # If a player want to move to the top or to the bottom, he is forced to stay in the middle.
-            if playerStats["reqY"] != 14 or playerStats["y"] != 14:
-                arbitre.rulePlayer(playerStats["clientId"], "reqY", 14)
-            # If a player is dead, he is respawned but his score is reset.
-            if playerStats["life"] >= 0:
-                arbitre.rulePlayer(playerStats["clientId"], "score", 10)
-
-            # Update total score of the game
-            score += playerStats["score"]
-
-    infoScores = "Total SCORE : " + str(score)
-    arbitre.ruleArena("info", infoScores)
-
-    oldRange = newRange
-    arbitre.update()
-    time.sleep(0.3)
-
-    # If a team wins,
-    # The game is paused
+        oldRange = newRange
+        arbitre.update()
